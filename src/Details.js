@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import pet from "@frontendmasters/pet";
 import Carousel from "./Carousel";
+import ErrorBoundary from "./ErrorBoundary.js";
 
 const Details = props => {
   const [name, setName] = useState("");
@@ -13,8 +14,7 @@ const Details = props => {
 
   useEffect(() => {
     pet.animal(props.id).then(({ animal: apiAnimal }) => {
-      console.log(apiAnimal);
-      // setName(apiAnimal.name);
+      setName(apiAnimal.name);
       setAnimal(apiAnimal.type);
       setLocation(
         `${apiAnimal.contact.address.city}, ${apiAnimal.contact.address.state}`
@@ -24,7 +24,7 @@ const Details = props => {
       setBreed(apiAnimal.breeds.primary);
       setLoading(false);
     }, console.error);
-  }, []);
+  }, [props.id]);
 
   if (loading) {
     return <h1>loading</h1>;
@@ -43,4 +43,10 @@ const Details = props => {
   );
 };
 
-export default Details;
+export default function DetailsWithErrorBoundary(props) {
+  return (
+    <ErrorBoundary>
+      <Details {...props} />
+    </ErrorBoundary>
+  );
+}
