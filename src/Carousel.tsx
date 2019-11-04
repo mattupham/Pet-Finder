@@ -1,10 +1,17 @@
 import React, { useState } from "react";
+import { Photo } from "@frontendmasters/pet";
 
-const Carousel = ({ media: photos }) => {
+interface Props {
+  media: Photo[];
+}
+const Carousel = ({ media: photos }: Props) => {
   const [active, setActive] = useState(0);
 
-  const handleIndexClick = event => {
-    setActive(+event.target.dataset.index);
+  const handleIndexClick = (event: React.MouseEvent<HTMLElement>) => {
+    if (!(event.target instanceof HTMLElement)) return;
+    if (event.target.dataset.index) {
+      setActive(+event.target.dataset.index);
+    }
   };
 
   return (
