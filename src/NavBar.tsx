@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "@reach/router";
 import { css, keyframes } from "@emotion/core";
-import colors from "./colors.js";
+import colors from "./colors";
 
 const spin = keyframes`
   to {
