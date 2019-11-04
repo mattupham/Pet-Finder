@@ -1,18 +1,18 @@
 import React, { useEffect, useState, useContext, lazy } from "react";
-import pet from "@frontendmasters/pet";
+import pet, { Photo } from "@frontendmasters/pet";
 import Carousel from "./Carousel";
 import ErrorBoundary from "./ErrorBoundary.js";
 import ThemeContext from "./ThemeContext";
-import { navigate } from "@reach/router";
+import { navigate, RouteComponentProps } from "@reach/router";
 
 const Modal = lazy(() => import("./Modal"));
 
-const Details = props => {
+const Details = (props: RouteComponentProps<{ id: string }>) => {
   const [name, setName] = useState("");
   const [animal, setAnimal] = useState("");
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
-  const [media, setMedia] = useState("");
+  const [media, setMedia] = useState([] as Photo[]);
   const [breed, setBreed] = useState("");
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(true);
@@ -20,7 +20,11 @@ const Details = props => {
   const [theme] = useContext(ThemeContext);
 
   useEffect(() => {
-    pet.animal(props.id).then(({ animal: apiAnimal }) => {
+    if (!props.id) {
+      navigate("/");
+      return;
+    }
+    pet.animal(+props.id).then(({ animal: apiAnimal }) => {
       setName(apiAnimal.name);
       setAnimal(apiAnimal.type);
       setLocation(
@@ -34,11 +38,11 @@ const Details = props => {
     }, console.error);
   }, [props.id]);
 
-  const toggleModal = () => {
+  const toggleModal: () => void = () => {
     setShowModal(!showModal);
   };
 
-  const adopt = () => navigate(url);
+  const adopt: () => void = () => navigate(url);
 
   if (loading) {
     return <h1>loading</h1>;
@@ -70,7 +74,9 @@ const Details = props => {
   );
 };
 
-export default function DetailsWithErrorBoundary(props) {
+export default function DetailsWithErrorBoundary(
+  props: RouteComponentProps<{ id: string }>
+) {
   return (
     <ErrorBoundary>
       <Details {...props} />
