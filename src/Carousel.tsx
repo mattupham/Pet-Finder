@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Photo } from "@frontendmasters/pet";
 
-interface Props {
+interface IProps {
   media: Photo[];
 }
-const Carousel = ({ media: photos }: Props) => {
+const Carousel = ({ media: photos }: IProps) => {
   const [active, setActive] = useState(0);
 
   const handleIndexClick = (event: React.MouseEvent<HTMLElement>) => {

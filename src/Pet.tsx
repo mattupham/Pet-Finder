@@ -1,8 +1,9 @@
 import React from "react";
 import { Link } from "@reach/router";
+import { Photo } from "@frontendmasters/pet";
 
-interface Props {
-  name: string;;
+interface IProps {
+  name: string;
   animal: string;
   breed: string;
   media: Photo[];
@@ -10,8 +11,9 @@ interface Props {
   id: number;
 }
 
-const Pet = ({ name, animal, breed, media, location, id }: Props) => {
+const Pet = ({ name, animal, breed, media, location, id }: IProps) => {
   let hero = "http://placecorgi.com/300/300";
+
   if (media.length) {
     hero = media[0].small;
   }

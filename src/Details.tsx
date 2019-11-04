@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext, lazy } from "react";
 import pet, { Photo } from "@frontendmasters/pet";
 import Carousel from "./Carousel";
-import ErrorBoundary from "./ErrorBoundary.js";
+import ErrorBoundary from "./ErrorBoundary";
 import ThemeContext from "./ThemeContext";
 import { navigate, RouteComponentProps } from "@reach/router";
 
