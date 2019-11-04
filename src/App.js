@@ -1,31 +1,27 @@
 import "babel-polyfill";
-import React, { useState, lazy, Suspense } from "react";
-import ReactDOM from "react-dom";
+import React, { useState } from "react";
 import { Router } from "@reach/router";
 import ThemeContext from "./ThemeContext";
 import NavBar from "./NavBar";
 
-const Details = lazy(() => import("./Details"));
-const SearchParams = lazy(() => import("./SearchParams"));
+import Details from "./Details";
+import SearchParams from "./SearchParams";
 
 const App = () => {
   const themeHook = useState("darkblue");
-
   return (
     <React.StrictMode>
       <ThemeContext.Provider value={themeHook}>
         <div>
           <NavBar />
-          <Suspense fallback={<h1>loading route ...</h1>}>
-            <Router>
-              <SearchParams path="/" />
-              <Details path="/details/:id" />
-            </Router>
-          </Suspense>
+          <Router>
+            <SearchParams path="/" />
+            <Details path="/details/:id" />
+          </Router>
         </div>
       </ThemeContext.Provider>
     </React.StrictMode>
   );
 };
 
-ReactDOM.render(<App />, document.getElementById("root"));
+export default App;
